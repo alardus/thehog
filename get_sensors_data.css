@@ -1,0 +1,14 @@
+body{
+  margin: 0;
+  width: 100%;
+}
+#div1{
+  height: 30px;
+  width: 40%;
+  float: left;
+}
+#div2{
+  height: 30px;
+  width: 60%;
+  float: right;
+}
