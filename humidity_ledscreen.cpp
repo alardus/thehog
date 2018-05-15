@@ -1,34 +1,23 @@
 #include "DHT.h"
 #include <LiquidCrystal.h>
-#include <IRremote.h>
 
-#define DHTPIN 2     
-#define DHTTYPE DHT11   
-DHT dht(DHTPIN, DHTTYPE);
-
-int RECV_PIN = 11;
-IRrecv irrecv (RECV_PIN);
-decode_results results;
+DHT dht;
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 void setup() {
-  Serial.begin(9600); 
-  dht.begin();
-  
-  irrecv.enableIRIn();
-  irrecv.blink13(true);
-  
-  lcd.begin(16, 2);
-  
-  
-}
-void loop() {
+  Serial.begin(9600);
+  dht.setup(2);
 
+  lcd.begin(16, 2);
+  lcd.print ("climate meter");
+}
+
+void loop() {
   delay(1000);
-  
-  float h = dht.readHumidity();
-  float t = dht.readTemperature();
+
+  float h = dht.getHumidity();
+  float t = dht.getTemperature();
 
   if (isnan(t) || isnan(h)) {
     Serial.println("Failed to read from DHT");
@@ -41,5 +30,4 @@ void loop() {
     lcd.print (h);
     lcd.print (" humidity");
   }
-  
 }
